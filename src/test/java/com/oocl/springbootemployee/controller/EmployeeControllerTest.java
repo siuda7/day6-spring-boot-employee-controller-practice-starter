@@ -15,13 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -60,7 +56,6 @@ public class EmployeeControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
         //Then
-        List<Employee> employees = employeesJacksonTester.parseObject(employeesResponseString);
         assertThat(employeesJacksonTester.parse(employeesResponseString)).usingRecursiveComparison().isEqualTo(expectedEmployees);
     }
 
