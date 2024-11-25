@@ -4,6 +4,7 @@ import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
 import jakarta.websocket.server.PathParam;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    @ResponseStatus(code = org.springframework.http.HttpStatus.CREATED)
+    @ResponseStatus(code = HttpStatus.CREATED)
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.addEmployee(employee);
     }
@@ -42,5 +43,11 @@ public class EmployeeController {
     @PutMapping(path = "/{id}")
     public Employee updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
         return employeeRepository.updateEmployee(id, employee.getAge(), employee.getSalary());
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public Integer deleteEmployee(@PathVariable Integer id) {
+        return employeeRepository.deleteEmployee(id);
     }
 }

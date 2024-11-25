@@ -143,6 +143,18 @@ public class EmployeeControllerTest {
 
     }
 
+    @Test
+    void should_delete_employee_when_delete_given_employee_id() throws Exception {
+
+        //Given
+        //When
+        String employeeId = client.perform(MockMvcRequestBuilders.delete("/employees/1"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andReturn().getResponse().getContentAsString();
+
+        //Then
+        assertThat(employeeId).isEqualTo("1");
 
 
+    }
 }

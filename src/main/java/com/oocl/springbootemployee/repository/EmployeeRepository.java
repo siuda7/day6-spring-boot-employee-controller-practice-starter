@@ -51,4 +51,17 @@ public class EmployeeRepository {
         updatedEmployee.setSalary(salary);
         return updatedEmployee;
     }
+
+    public Integer deleteEmployee(Integer id) {
+        Employee employee = employees.stream()
+                .filter(e -> e.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        if (employee != null) {
+            employees.remove(employee);
+            return id;
+        } else {
+            return null;
+        }
+    }
 }
