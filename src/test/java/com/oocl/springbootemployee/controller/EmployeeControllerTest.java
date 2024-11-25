@@ -75,5 +75,29 @@ public class EmployeeControllerTest {
 
     }
 
+    @Test
+    void should_return_male_when_get_male_given_employees() throws Exception{
+
+        //Given
+        List<Employee> expectedEmployees = employeeRepository.getByGender(Gender.MALE);
+
+        //Given
+        String employeesResponseString = client.perform(MockMvcRequestBuilders.get("/employees")
+                        .param("gender", Gender.MALE.name()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        List<Employee> employees = employeesJacksonTester.parseObject(employeesResponseString);
+        assertEquals(expectedEmployees, employees);
+
+
+        //When
+
+
+        //Then
+
+
+    }
+
 
 }
