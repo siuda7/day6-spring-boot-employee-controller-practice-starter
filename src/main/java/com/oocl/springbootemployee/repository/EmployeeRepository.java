@@ -41,4 +41,14 @@ public class EmployeeRepository {
         employees.add(employee);
         return employee;
     }
+
+    public Employee updateEmployee(Integer id, Integer age, Double salary) {
+        Employee updatedEmployee = employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        updatedEmployee.setAge(age);
+        updatedEmployee.setSalary(salary);
+        return updatedEmployee;
+    }
 }

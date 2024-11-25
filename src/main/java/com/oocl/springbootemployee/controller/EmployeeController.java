@@ -38,4 +38,9 @@ public class EmployeeController {
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeRepository.addEmployee(employee);
     }
+
+    @PutMapping(path = "/{id}")
+    public Employee updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
+        return employeeRepository.updateEmployee(id, employee.getAge(), employee.getSalary());
+    }
 }

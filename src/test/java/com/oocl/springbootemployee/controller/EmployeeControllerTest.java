@@ -120,6 +120,29 @@ public class EmployeeControllerTest {
         assertThat(employeeJacksonTester.parse(employeeJson)).usingRecursiveComparison().isEqualTo(expected_employee);
     }
 
+    @Test
+    void should_update_employee_when_put_given_employee_id() throws Exception {
+
+        //Given
+        String employee = """
+                {
+                    "age": 12,
+                    "salary": 10000.0
+                }
+                """;
+
+        // When
+        final Employee expectedEmployee = new Employee(1, "E1", 12, Gender.MALE, 10000.0);
+        String employeeJson = client.perform((MockMvcRequestBuilders.put("/employees/1"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(employee))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        // Then
+        assertThat(employeeJacksonTester.parse(employeeJson)).usingRecursiveComparison().isEqualTo(expectedEmployee);
+
+    }
+
 
 
 }
