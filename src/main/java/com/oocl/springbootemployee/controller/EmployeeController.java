@@ -32,4 +32,10 @@ public class EmployeeController {
     public List<Employee> getByGender(@RequestParam Gender gender) {
         return employeeRepository.getByGender(gender);
     }
+
+    @PostMapping
+    @ResponseStatus(code = org.springframework.http.HttpStatus.CREATED)
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return employeeRepository.addEmployee(employee);
+    }
 }
