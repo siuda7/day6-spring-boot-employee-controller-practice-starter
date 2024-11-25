@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -155,6 +156,28 @@ public class EmployeeControllerTest {
         //Then
         assertThat(employeeId).isEqualTo("1");
 
+    }
+
+    @Test
+    void should_return_page_employees_when_employees_page_given_page_and_page_size() throws Exception {
+
+        List<Employee> expectedEmployees = employeeRepository.getAll();
+
+        final Integer page = 1;
+        final Integer pageSize = 5;
+
+        //When
+        String employeesResponseString = client.perform(MockMvcRequestBuilders.get("/employees")
+                        .param("page", String.valueOf(page))
+                        .param("pageSize", String.valueOf(pageSize)) )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        //Then
+        List<Employee> employees = employeesJacksonTester.parseObject(employeesResponseString);
+        assertThat(employeesJacksonTester.parse(employeesResponseString)).usingRecursiveComparison().isEqualTo(expectedEmployees);
 
     }
+
+
 }

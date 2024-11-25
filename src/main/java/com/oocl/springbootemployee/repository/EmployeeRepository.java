@@ -64,4 +64,11 @@ public class EmployeeRepository {
             return null;
         }
     }
+
+    public List<Employee> getByPage(Integer startingPage, Integer pageSize) {
+        return employees.stream()
+                .skip((startingPage - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 }
