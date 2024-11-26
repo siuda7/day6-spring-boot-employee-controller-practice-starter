@@ -69,7 +69,6 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
         //Then
-        Employee employee = employeeJacksonTester.parseObject(employeeResponseString);
         assertThat(employeeJacksonTester.parse(employeeResponseString)).usingRecursiveComparison().isEqualTo(expectedEmployee);
     }
 
@@ -156,10 +155,14 @@ public class EmployeeControllerTest {
     @Test
     void should_return_page_employees_when_employees_page_given_page_and_page_size() throws Exception {
 
-        List<Employee> expectedEmployees = employeeRepository.getAll();
-
         final Integer page = 1;
         final Integer pageSize = 5;
+
+        employeeRepository.addEmployee(new Employee(4, "E4", 10, Gender.MALE, 5000.0));
+        employeeRepository.addEmployee(new Employee(5, "E5", 20, Gender.FEMALE, 15000.0));
+        employeeRepository.addEmployee(new Employee(6, "E6", 30, Gender.MALE, 35000.0));
+
+        List<Employee> expectedEmployees = employeeRepository.getByPage(page, pageSize);
 
         //When
         String employeesResponseString = client.perform(MockMvcRequestBuilders.get("/employees")
